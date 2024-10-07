@@ -19,4 +19,5 @@ carrier.position([1, 4]);
 const path = carrier.path("v");
 const endPosition = path.slice(-1);
 console.log(endPosition);
+path.concat([7, 8], [8, 8]);
 console.log(path);

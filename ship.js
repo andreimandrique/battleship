@@ -21,8 +21,6 @@ function Ship(name, hp) {
       const x = this.position[0] + (this.hp - 1);
       const y = this.position[1];
       const endPosition = [x, y];
-      // console.log(startPosition);
-      // console.log(endPosition);
       const fullPath = [];
 
       while (startPosition[0] != endPosition[0]) {
@@ -30,19 +28,16 @@ function Ship(name, hp) {
         const pathingX = startPosition[0]++;
         const pathingY = startPosition[1];
         path.push(pathingX, pathingY);
-
         fullPath.push(path);
       }
 
       fullPath.push(endPosition);
-      return fullPath;
+      return { endPosition, fullPath };
     } else if (dir == "v") {
       const startPosition = this.position;
       const x = this.position[0];
       const y = this.position[1] + (this.hp - 1);
       const endPosition = [x, y];
-      // console.log(startPosition);
-      // console.log(endPosition);
       const fullPath = [];
 
       while (startPosition[1] != endPosition[1]) {
@@ -50,12 +45,11 @@ function Ship(name, hp) {
         const pathingX = startPosition[0];
         const pathingY = startPosition[1]++;
         path.push(pathingX, pathingY);
-
         fullPath.push(path);
       }
 
       fullPath.push(endPosition);
-      return fullPath;
+      return { endPosition, fullPath };
     }
   };
 }
