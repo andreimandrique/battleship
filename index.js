@@ -15,6 +15,21 @@ const board = [
 ];
 //0 1 2 3 4 5 6 7 8 9         X
 
+const occupied = new Set();
+
+function positionToString(position) {
+  return `${position[0]},${position[1]}`;
+}
+
+function isPathClear(path) {
+  for (const position of path) {
+    if (occupied.has(positionToString(position))) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function placeRandomCarrier() {
   while (true) {
     const randomP = randomPosition();
@@ -30,14 +45,17 @@ function placeRandomCarrier() {
   }
 }
 
+const randomCarrier = placeRandomCarrier();
+randomCarrier.forEach((pos) => occupied.add(positionToString(pos)));
+
 function placeRandomBattleship() {
   while (true) {
     const randomP = randomPosition();
     const randomD = randomDirection();
 
-    const carrier = new Ship("battleship", 4);
-    const startPosition = carrier.position(randomP);
-    const { endPosition, fullPath } = carrier.path(randomD);
+    const battleship = new Ship("battleship", 4);
+    const startPosition = battleship.position(randomP);
+    const { endPosition, fullPath } = battleship.path(randomD);
 
     if (endPosition[0] < 10 && endPosition[1] < 10 && isPathClear(fullPath)) {
       return fullPath;
@@ -45,22 +63,15 @@ function placeRandomBattleship() {
   }
 }
 
-const occupied = new Set();
+const randomBattleship = placeRandomBattleship();
+randomBattleship.forEach((pos) => occupied.add(positionToString(pos)));
 
-function isPathClear(path) {
-  for (const position of path) {
-    if (occupied.has(position)) {
-      return false;
-    }
-  }
-  return true;
+console.log("Carrier");
+for (const element of randomCarrier) {
+  console.log(element);
 }
 
-const randomC = placeRandomCarrier();
-const randomB = placeRandomBattleship();
-
-const combine = [...randomC, ...randomB];
-
-for (const item of combine) {
-  console.log(item);
+console.log("Battleship");
+for (const element of randomBattleship) {
+  console.log(element);
 }
