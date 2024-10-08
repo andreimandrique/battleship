@@ -1,13 +1,13 @@
-function Ship(name, hp) {
+function Ship(name, size) {
   this.name = name;
-  this.hp = hp;
+  this.size = size;
 
   this.hit = function () {
-    this.hp--;
+    this.size--;
   };
 
   this.isSunk = function () {
-    if (this.hp == 0) return true;
+    if (this.size == 0) return true;
   };
 
   this.position = function ([x, y]) {
@@ -18,7 +18,7 @@ function Ship(name, hp) {
   this.path = function (dir) {
     if (dir == "h") {
       const startPosition = this.position;
-      const x = this.position[0] + (this.hp - 1);
+      const x = this.position[0] + (this.size - 1);
       const y = this.position[1];
       const endPosition = [x, y];
       const fullPath = [];
@@ -36,7 +36,7 @@ function Ship(name, hp) {
     } else if (dir == "v") {
       const startPosition = this.position;
       const x = this.position[0];
-      const y = this.position[1] + (this.hp - 1);
+      const y = this.position[1] + (this.size - 1);
       const endPosition = [x, y];
       const fullPath = [];
 
