@@ -141,8 +141,36 @@ const randomShip = [
   ...randomDestroyer,
 ];
 
-function placeRandomShip() {
+function carrierRandomPosition() {
+  return randomCarrier;
+}
+
+function battleshipRandomPosition() {
+  return randomBattleship;
+}
+
+function cruiserRandomPosition() {
+  return randomCruiser;
+}
+
+function submarieRandomPosition() {
+  return placeSubmarine;
+}
+
+function destroyerRandomPosition() {
+  return placeDestroyer;
+}
+
+function randomShipPosition() {
   return randomShip;
 }
 
-export { shipInformation, placeRandomShip };
+export {
+  shipInformation,
+  carrierRandomPosition,
+  battleshipRandomPosition,
+  cruiserRandomPosition,
+  submarieRandomPosition,
+  destroyerRandomPosition,
+  randomShipPosition,
+};

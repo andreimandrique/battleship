@@ -1,11 +1,29 @@
-import { shipInformation, placeRandomShip } from "./randomShip.js";
+import { randomShipPosition, shipInformation } from "./randomShip.js";
 
-shipInformation();
-const randomShip = placeRandomShip();
+const computerContainer = document.querySelector(".computer-container");
 
-console.log("random ship");
-console.log(randomShip.length);
+const computerBoard = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 0
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 1
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 2
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 3
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 4   Y
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 5
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 6
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 7
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 8
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 9
+];
 
-for (const ship of randomShip) {
-  console.log(ship);
+for (let y = 0; y < 10; y++) {
+  for (let x = 0; x < 10; x++) {
+    const div = document.createElement("div");
+    div.classList.add("cell");
+
+    div.addEventListener("click", () => {
+      console.log({ x, y });
+    });
+
+    computerContainer.append(div);
+  }
 }
