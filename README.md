@@ -11,4 +11,7 @@ My final project in The Odin Project JavaScript course.
 - Click the randomize button to randomize your boat position.
 - You cannot attack the same location twice.
 
+Play the game here.
+
+https://andreimandrique.github.io/battleship/
   
