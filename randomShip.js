@@ -106,8 +106,16 @@ function makeRandomShipPosition() {
   const randomDestroyer = placeRandomDestroyer();
   randomDestroyer.forEach((pos) => occupied.add(positionToString(pos)));
 
+  const randomShipPosition = [
+    ...randomCarrier,
+    ...randomBattleship,
+    ...randomCruiser,
+    ...randomSubmarine,
+    ...randomDestroyer,
+  ];
+
   return {
-    randomCarrier,
+    randomShipPosition,
   };
 }
 

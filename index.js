@@ -2,14 +2,29 @@ import { makeRandomShipPosition } from "./randomShip.js";
 import { randomPosition } from "./random.js";
 
 function makeRandomShip() {
-  const { randomCarrier } = makeRandomShipPosition();
+  const { randomShipPosition } = makeRandomShipPosition();
 
-  return randomCarrier;
+  return randomShipPosition;
 }
 
 const computerContainer = document.querySelector(".computer-container");
 const playerContainer = document.querySelector(".player-container");
 const btn = document.querySelector("button");
+
+let playerHealth = 17;
+let computerHealth = 17;
+
+function checkWin() {
+  if (playerHealth == 0) {
+    alert("computer win");
+    console.log("computer win");
+  }
+
+  if (computerHealth == 0) {
+    alert("player win");
+    console.log("player win");
+  }
+}
 
 const computerBoard = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 0
@@ -24,52 +39,61 @@ const computerBoard = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 9
 ];
 
-const computerRandomShip = makeRandomShip();
-const computerShipPosition = new Set();
-const computerAllMoves = new Set();
+function renderComputerBoard() {
+  const computerRandomShip = makeRandomShip();
+  const computerShipPosition = new Set();
+  const computerAllMoves = new Set();
 
-for (const ship of computerRandomShip) {
-  const x = ship[0];
-  const y = ship[1];
-  computerBoard[x][y] = "b";
-  computerShipPosition.add([x, y].toString());
-}
-
-for (let y = 0; y < 10; y++) {
-  for (let x = 0; x < 10; x++) {
-    const div = document.createElement("div");
-    div.classList.add("cell");
-
-    if (computerBoard[x][y] == "b") {
-      div.classList.add("blue");
+  function placeComputerShip() {
+    for (const ship of computerRandomShip) {
+      const x = ship[0];
+      const y = ship[1];
+      computerBoard[x][y] = "b";
+      computerShipPosition.add([x, y].toString());
     }
+  }
+  placeComputerShip();
 
-    div.addEventListener("click", () => {
-      if (computerShipPosition.has([x, y].toString())) {
-        if (computerAllMoves.has([x, y].toString())) {
-          // console.log("cannot attack the same position twice");
-          attackRandomPosition(false);
-        } else {
-          div.classList.add("red");
-          // console.log("hit");
-          attackRandomPosition(true);
-        }
-      } else {
-        if (computerAllMoves.has([x, y].toString())) {
-          attackRandomPosition(false);
-        } else {
-          div.classList.add("green");
-          // console.log("miss");
-          attackRandomPosition(true);
-        }
+  computerContainer.textContent = "";
+  for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < 10; x++) {
+      const div = document.createElement("div");
+      div.classList.add("cell");
+
+      if (computerBoard[x][y] == "b") {
+        //when testing add this blue class to see the computer board
+        // div.classList.add("blue");
       }
 
-      computerAllMoves.add([x, y].toString());
-    });
+      div.addEventListener("click", () => {
+        if (computerShipPosition.has([x, y].toString())) {
+          if (computerAllMoves.has([x, y].toString())) {
+            // console.log("cannot attack the same position twice");
+            attackPlayer(false);
+          } else {
+            div.classList.add("red");
+            // console.log("hit");
+            computerHealth--;
+            attackPlayer(true);
+          }
+        } else {
+          if (computerAllMoves.has([x, y].toString())) {
+            attackPlayer(false);
+          } else {
+            div.classList.add("green");
+            // console.log("miss");
+            attackPlayer(true);
+          }
+        }
 
-    computerContainer.append(div);
+        computerAllMoves.add([x, y].toString());
+      });
+
+      computerContainer.append(div);
+    }
   }
 }
+renderComputerBoard();
 
 const playerBoard = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 0
@@ -84,16 +108,20 @@ const playerBoard = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 9
 ];
 
-const playerRandomShip = makeRandomShip();
-const playerAllShipPosition = new Set();
 const playerAllMoves = new Set();
+const playerAllShipPosition = new Set();
 
-for (const ship of playerRandomShip) {
-  const x = ship[0];
-  const y = ship[1];
-  playerBoard[x][y] = "b";
-  playerAllShipPosition.add([x, y].toString());
+function placePlayerShip() {
+  const playerRandomShip = makeRandomShip();
+
+  for (const ship of playerRandomShip) {
+    const x = ship[0];
+    const y = ship[1];
+    playerBoard[x][y] = "b";
+    playerAllShipPosition.add([x, y].toString());
+  }
 }
+placePlayerShip();
 
 function renderPlayerBoard() {
   playerContainer.textContent = "";
@@ -118,10 +146,9 @@ function renderPlayerBoard() {
     }
   }
 }
-
 renderPlayerBoard();
 
-function attackRandomPosition(valid) {
+function attackPlayer(valid) {
   if (valid === true) {
     let x, y;
     do {
@@ -131,6 +158,7 @@ function attackRandomPosition(valid) {
     if (playerAllShipPosition.has([x, y].toString())) {
       // console.log("hit");
       playerBoard[x][y] = "r";
+      playerHealth--;
     } else {
       // console.log("miss");
       playerBoard[x][y] = "g";
@@ -138,5 +166,27 @@ function attackRandomPosition(valid) {
 
     renderPlayerBoard();
     playerAllMoves.add([x, y].toString());
+    checkWin();
   }
 }
+
+btn.addEventListener("click", () => {
+  for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < 10; x++) {
+      computerBoard[x][y] = 0;
+    }
+  }
+
+  for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < 10; x++) {
+      playerBoard[x][y] = 0;
+    }
+  }
+
+  playerAllMoves.clear();
+  playerAllShipPosition.clear();
+  placePlayerShip();
+  renderPlayerBoard();
+
+  renderComputerBoard();
+});

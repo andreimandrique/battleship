@@ -1,6 +1,9 @@
+h2 {
+  text-align: center;
+}
 .game-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 .computer-container,
 .player-container {
@@ -8,8 +11,8 @@
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
   border: 1px solid black;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 .cell {
   border: 1px solid black;
@@ -23,9 +26,19 @@
 .red {
   background-color: red;
 }
+.center {
+  display: flex;
+  justify-content: center;
+}
 
 button {
+  border-radius: 8px;
+  border: 0;
   margin: 1rem 2rem;
-  height: 2rem;
-  width: 3rem;
+  padding: 1rem;
+  background-color: black;
+  color: white;
+}
+button:hover {
+  cursor: pointer;
 }
