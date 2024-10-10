@@ -1,3 +1,7 @@
+.game-container {
+  display: flex;
+  justify-content: space-around;
+}
 .computer-container,
 .player-container {
   display: grid;
@@ -19,8 +23,9 @@
 .red {
   background-color: red;
 }
+
 button {
-  margin-top: 8px;
+  margin: 1rem 2rem;
   height: 2rem;
   width: 3rem;
 }
